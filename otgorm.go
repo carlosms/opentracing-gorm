@@ -81,6 +81,8 @@ func (c *callbacks) after(scope *gorm.Scope, operation string) {
 	sp.SetTag("db.method", operation)
 	sp.SetTag("db.err", scope.HasError())
 	sp.SetTag("db.count", scope.DB().RowsAffected)
+	ext.SpanKindRPCClient.Set(sp)
+	ext.PeerService.Set(sp, "SQL")
 	sp.Finish()
 }
 

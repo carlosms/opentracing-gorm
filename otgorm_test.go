@@ -4,11 +4,12 @@ import (
 	"context"
 	"testing"
 
+	otgorm "github.com/carlosms/opentracing-gorm"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
 	"github.com/opentracing/opentracing-go/mocktracer"
-	otgorm "github.com/smacker/opentracing-gorm"
 )
 
 var tracer *mocktracer.MockTracer
@@ -66,6 +67,8 @@ func TestPool(t *testing.T) {
 		"db.statement": `SELECT * FROM "products"  WHERE "products"."deleted_at" IS NULL AND (("products"."id" = 1)) ORDER BY "products"."id" ASC LIMIT 1`,
 		"db.err":       false,
 		"db.count":     int64(1),
+		"span.kind":    ext.SpanKindRPCClientEnum,
+		"peer.service": "SQL",
 	}
 
 	sqlTags := sqlSpan.Tags()

@@ -5,7 +5,7 @@
 ## Install
 
 ```
-go get -u github.com/smacker/opentracing-gorm
+go get -u github.com/carlosms/opentracing-gorm
 ```
 
 ## Usage
